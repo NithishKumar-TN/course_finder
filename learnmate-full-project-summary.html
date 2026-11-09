@@ -1,0 +1,484 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>LearnMate — Project Summary</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "Segoe UI", system-ui, sans-serif; background: #f7f8fa; color: #1f2328; font-size: 14px; line-height: 1.65; }
+  .page { max-width: 760px; margin: 0 auto; padding: 36px 24px 60px; }
+
+  /* Header */
+  .header { background: #0f1117; border-radius: 14px; padding: 30px 32px; margin-bottom: 28px; color: #e8eaf0; }
+  .header-top { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
+  .logo { font-size: 40px; }
+
+  .title { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; }
+  .title span { color: #6366f1; }
+  .subtitle { font-size: 13px; color: #8b8fa8; margin-top: 2px; }
+  .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .badge { border-radius: 20px; padding: 4px 14px; font-size: 12px; font-weight: 600; }
+  .b-ps    { background: #0d1f0f; color: #4ade80; border: 1px solid #166534; }
+  .b-ibm   { background: #0a1628; color: #4589ff; border: 1px solid #1a3a70; }
+  .b-model { background: #1a0d2e; color: #a78bfa; border: 1px solid #3d1d7a; }
+  .b-stack { background: #1a1208; color: #fbbf24; border: 1px solid #78350f; }
+
+  /* Section */
+  .section { margin-bottom: 28px; }
+  .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #57606a; margin-bottom: 14px; padding-bottom: 6px; border-bottom: 2px solid #e5e7eb; }
+
+  /* Cards */
+  .card { background: #fff; border: 1px solid #e5e7eb; border-radius: 10px; padding: 18px 20px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .card-title { font-weight: 700; font-size: 13px; margin-bottom: 8px; display: flex; align-items: center; gap: 7px; }
+  .card ul { padding-left: 18px; }
+  .card li { font-size: 13px; color: #444d56; margin-bottom: 4px; }
+  .card p { font-size: 13px; color: #444d56; }
+
+  /* Problem / Solution */
+  .problem-card { border-left: 3px solid #ef4444; }
+  .solution-card { border-left: 3px solid #22c55e; }
+
+  /* Conversation flow */
+  .flow-box { background: #fff; border: 1px solid #e5e7eb; border-radius: 10px; padding: 20px 24px; }
+  .flow { display: flex; flex-direction: column; }
+  .flow-step { display: flex; align-items: flex-start; gap: 16px; position: relative; }
+  .flow-step:not(:last-child) { padding-bottom: 6px; }
+  .flow-step:not(:last-child)::after { content: ""; position: absolute; left: 15px; top: 38px; width: 2px; height: calc(100% - 6px); background: #e5e7eb; z-index: 0; }
+  .dot { width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #fff; margin-top: 10px; z-index: 1; }
+  .step-body { padding: 8px 0 24px; flex: 1; }
+  .step-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #57606a; }
+  .step-title { font-weight: 700; font-size: 14px; margin: 2px 0 4px; }
+  .step-desc { font-size: 13px; color: #444d56; line-height: 1.55; }
+  .chip { display: inline-block; background: #f0f4ff; color: #3b62c9; border: 1px solid #c7d7f5; border-radius: 4px; padding: 1px 7px; font-size: 11px; margin-top: 5px; }
+  .chip-green { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
+  .chip-purple { background: #faf5ff; color: #7c3aed; border-color: #ddd6fe; }
+
+  /* Key behaviour box */
+  .behaviour-row { display: flex; gap: 0; border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden; }
+  .brow { flex: 1; padding: 14px 16px; font-size: 13px; }
+  .brow-you { background: #f0f4ff; border-right: 1px solid #e5e7eb; }
+  .brow-bot { background: #f0fdf4; }
+  .brow-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #57606a; margin-bottom: 6px; }
+  .brow p { color: #1f2328; line-height: 1.5; }
+  .brow-divider { width: 100%; height: 1px; background: #e5e7eb; }
+
+  /* Architecture grid */
+  .arch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .arch-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 10px; padding: 16px; }
+  .arch-title { font-weight: 700; font-size: 13px; margin-bottom: 10px; display: flex; align-items: center; gap: 7px; }
+  .file-list { list-style: none; }
+  .file-list li { display: flex; align-items: baseline; gap: 8px; padding: 5px 0; border-bottom: 1px solid #f3f4f6; font-size: 12px; }
+  .file-list li:last-child { border-bottom: none; }
+  .fname { color: #3b62c9; font-family: monospace; font-size: 11.5px; flex-shrink: 0; }
+  .fdesc { color: #57606a; }
+
+  /* Tracks */
+  .tracks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .track-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 10px; padding: 14px; text-align: center; }
+  .track-icon { font-size: 30px; margin-bottom: 6px; }
+  .track-name { font-weight: 600; font-size: 13px; }
+  .track-count { font-size: 11px; color: #57606a; margin-top: 2px; }
+
+  /* Tech stack */
+  .tech-list { display: flex; flex-direction: column; gap: 14px; }
+  .tech-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px 22px; display: flex; gap: 18px; align-items: flex-start; }
+  .tech-icon-wrap { width: 52px; height: 52px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 26px; flex-shrink: 0; }
+  .icon-granite  { background: #eaf0ff; }
+  .icon-watsonx  { background: #e8f0fe; }
+  .icon-react    { background: #e8f8ff; }
+  .icon-node     { background: #edfaee; }
+  .icon-iam      { background: #fff4e0; }
+  .icon-session  { background: #fdf5ff; }
+  .tech-body { flex: 1; }
+  .tech-name { font-size: 15px; font-weight: 800; margin-bottom: 2px; }
+  .tech-model { font-size: 11px; font-weight: 600; color: #57606a; margin-bottom: 6px; font-style: italic; }
+  .tech-desc { font-size: 13px; color: #444d56; line-height: 1.6; }
+  .tech-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .tag { border-radius: 5px; padding: 2px 9px; font-size: 11px; font-weight: 600; }
+  .tag-blue   { background: #eaf0ff; color: #3b62c9; border: 1px solid #c7d7f5; }
+  .tag-green  { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+  .tag-purple { background: #faf5ff; color: #7c3aed; border: 1px solid #ddd6fe; }
+  .tag-orange { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
+  .tag-yellow { background: #fefce8; color: #a16207; border: 1px solid #fde68a; }
+  .tag-teal   { background: #f0fdfa; color: #0f766e; border: 1px solid #99f6e4; }
+  .stripe-granite  { border-left: 4px solid #4589ff; }
+  .stripe-watsonx  { border-left: 4px solid #6366f1; }
+  .stripe-react    { border-left: 4px solid #38bdf8; }
+  .stripe-node     { border-left: 4px solid #22c55e; }
+  .stripe-iam      { border-left: 4px solid #f59e0b; }
+  .stripe-session  { border-left: 4px solid #a855f7; }
+
+  /* IBM box */
+  .ibm-box { background: #0a1628; border: 1px solid #1a3a70; border-radius: 10px; padding: 20px 24px; color: #e8eaf0; display: flex; gap: 18px; align-items: flex-start; }
+  .ibm-logo { font-size: 26px; font-weight: 900; color: #4589ff; font-family: "IBM Plex Sans", system-ui; letter-spacing: -1px; flex-shrink: 0; padding-top: 2px; }
+  .ibm-title { font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+  .ibm-sub { font-size: 12px; color: #8b8fa8; margin-bottom: 10px; }
+  .ibm-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+  .ibm-chip { background: #0f2044; color: #93c5fd; border: 1px solid #1e4080; border-radius: 5px; padding: 3px 10px; font-size: 12px; }
+
+  /* API table */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; padding: 8px 12px; background: #f7f8fa; color: #57606a; font-weight: 600; border-bottom: 2px solid #e5e7eb; font-size: 12px; }
+  td { padding: 8px 12px; border-bottom: 1px solid #f0f1f3; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  .method { font-family: monospace; font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 3px; }
+  .get { background: #dbeafe; color: #1d4ed8; }
+  .post { background: #d1fae5; color: #065f46; }
+  .patch { background: #fef3c7; color: #92400e; }
+  code { background: #f0f4ff; border: 1px solid #d6e0ff; border-radius: 3px; padding: 1px 5px; font-family: monospace; font-size: 12px; color: #3b62c9; }
+
+  /* Setup */
+  .setup { display: flex; flex-direction: column; gap: 10px; }
+  .setup-step { display: flex; gap: 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 10px; padding: 14px 18px; align-items: flex-start; }
+  .setup-num { width: 26px; height: 26px; border-radius: 50%; background: #3b82d4; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+  .setup-text { font-size: 13px; line-height: 1.6; }
+  .setup-text strong { font-weight: 600; }
+
+  /* Footer */
+  .footer { text-align: center; font-size: 12px; color: #8b949e; padding-top: 24px; margin-top: 12px; border-top: 1px solid #e5e7eb; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  
+  <div class="header">
+    <div class="header-top">
+      <div class="logo">🎓</div>
+      <div class="brand">
+        <div class="title">Learn<span>Mate</span></div>
+        <div class="subtitle">Agentic AI Coach for Personalized Course Pathways</div>
+      </div>
+    </div>
+    <div class="badges">
+      <span class="badge b-ps">Problem Statement #12</span>
+      <span class="badge b-ibm">IBM Cloud Lite</span>
+      <span class="badge b-model">IBM Granite 4 · watsonx.ai</span>
+      <span class="badge b-stack">React + Node.js + Express</span>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <div class="section-title">Problem &amp; Solution</div>
+    <div class="two-col">
+      <div class="card problem-card">
+        <div class="card-title">❌ The Challenge</div>
+        <ul>
+          <li>Students overwhelmed by thousands of online courses</li>
+          <li>No guidance tailored to individual skill level</li>
+          <li>No adaptive system that tracks progress over time</li>
+          <li>One-size-fits-all roadmaps don't match real goals</li>
+        </ul>
+      </div>
+      <div class="card solution-card">
+        <div class="card-title">✅ LearnMate's Solution</div>
+        <ul>
+          <li>Conversational AI coach powered by IBM Granite</li>
+          <li>Asks focused questions one at a time</li>
+          <li>Never advances until it gets the right answer</li>
+          <li>Generates a personalized roadmap + tracks progress</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <div class="section-title">Key Agentic Behaviour — Persistent Questioning</div>
+    <div class="card" style="padding:0;overflow:hidden;margin-bottom:12px">
+      <div style="padding:12px 16px;background:#f7f8fa;font-size:12px;font-weight:700;color:#57606a;border-bottom:1px solid #e5e7eb">
+        Example: Student ignores skill-level question repeatedly — bot re-asks every time
+      </div>
+      <div class="behaviour-row" style="border:none;border-radius:0">
+        <div class="brow brow-you"><div class="brow-label">Student</div><p>hiii</p></div>
+        <div class="brow brow-bot"><div class="brow-label">LearnMate</div><p>Hi there! I noticed you said "hiii" — what is your current skill level? <br /><br /><strong>1.</strong> Beginner   <strong>2.</strong> Intermediate   <strong>3.</strong> Advanced</p></div>
+      </div>
+      <div class="brow-divider"></div>
+      <div class="behaviour-row" style="border:none;border-radius:0">
+        <div class="brow brow-you"><div class="brow-label">Student</div><p>haha ok</p></div>
+        <div class="brow brow-bot"><div class="brow-label">LearnMate</div><p>Got it! What is your current skill level in Frontend Development?<br /><br /><strong>1.</strong> Beginner   <strong>2.</strong> Intermediate   <strong>3.</strong> Advanced</p></div>
+      </div>
+      <div class="brow-divider"></div>
+      <div class="behaviour-row" style="border:none;border-radius:0">
+        <div class="brow brow-you"><div class="brow-label">Student</div><p>I am a beginner</p></div>
+        <div class="brow brow-bot"><div class="brow-label">LearnMate</div><p>Got it — <strong>Beginner</strong>! 👍 What's your main goal?<br /><br /><strong>1.</strong> Get a job   <strong>2.</strong> Build projects   <strong>3.</strong> Upskill</p></div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:#57606a;padding:0 4px">The stage <strong>never advances</strong> until the required answer is received. IBM Granite both generates the natural acknowledgement and extracts the structured value from any phrasing.</p>
+  </div>
+
+  
+  <div class="section">
+    <div class="section-title">5-Stage Agentic Conversation Flow</div>
+    <div class="flow-box">
+      <div class="flow">
+        <div class="flow-step">
+          <div class="dot" style="background:#6366f1">1</div>
+          <div class="step-body">
+            <div class="step-tag">Stage: greeting</div>
+            <div class="step-title">👋 Name Collection</div>
+            <div class="step-desc">Bot greets and asks for the student's name. Keeps asking until a name is detected. IBM Granite extracts first name from any phrasing ("I'm Meera", "call me Sam", "Riya here").</div>
+            <span class="chip">Loops until name is captured</span>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="dot" style="background:#7c5cd8">2</div>
+          <div class="step-body">
+            <div class="step-tag">Stage: interest_assessment</div>
+            <div class="step-title">🎯 Track Selection</div>
+            <div class="step-desc">Shows 6 numbered learning tracks. Accepts answers by number ("3"), keyword ("frontend"), or natural language ("I like design"). Re-asks if nothing matches.</div>
+            <span class="chip">Granite extraction + number map + keyword fallback</span>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="dot" style="background:#0f62fe">3</div>
+          <div class="step-body">
+            <div class="step-tag">Stage: skill_assessment</div>
+            <div class="step-title">📊 Skill Level Check</div>
+            <div class="step-desc">Asks Beginner / Intermediate / Advanced. Accepts numbers, words, or sentences ("I've never coded before" → beginner). Loops until a level is confidently identified.</div>
+            <span class="chip">Granite extraction + regex fallback</span>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="dot" style="background:#0891b2">4</div>
+          <div class="step-body">
+            <div class="step-tag">Stage: goal_collection</div>
+            <div class="step-title">🚀 Goal Setting</div>
+            <div class="step-desc">Asks about the student's main goal (job / projects / upskilling). Single-word noise like "ok" or "lol" is detected and re-asked. Any meaningful sentence is accepted.</div>
+            <span class="chip">Noise detection → re-ask if too short / off-topic</span>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="dot" style="background:#22c55e">5</div>
+          <div class="step-body">
+            <div class="step-tag">Stage: roadmap_generated → in_progress</div>
+            <div class="step-title">🗺️ Roadmap + Adaptive Coaching</div>
+            <div class="step-desc">Personalized roadmap generated instantly from the course catalog. Student then chats freely — bot answers questions, celebrates completions, suggests next steps, and adapts roadmap if they add new tracks.</div>
+            <span class="chip chip-green">Full conversation history in every reply</span>
+            <span class="chip chip-purple">Roadmap updates in real time</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <div class="section-title">Project Architecture</div>
+    <div class="arch-grid">
+      <div class="arch-card">
+        <div class="arch-title">⚙️ Backend — Node.js / Express</div>
+        <ul class="file-list">
+          <li><span class="fname">server.js</span><span class="fdesc">Entry point, CORS, rate limiting</span></li>
+          <li><span class="fname">graniteService.js</span><span class="fdesc">IBM Granite chat completions API</span></li>
+          <li><span class="fname">agentService.js</span><span class="fdesc">5-stage agentic state machine</span></li>
+          <li><span class="fname">sessionService.js</span><span class="fdesc">In-memory student session store</span></li>
+          <li><span class="fname">courses.js</span><span class="fdesc">54-course catalog (6 tracks × 3 levels)</span></li>
+          <li><span class="fname">routes/chat.js</span><span class="fdesc">Session create &amp; message endpoints</span></li>
+          <li><span class="fname">routes/roadmap.js</span><span class="fdesc">Roadmap fetch &amp; regenerate</span></li>
+          <li><span class="fname">routes/progress.js</span><span class="fdesc">Course completion tracking</span></li>
+          <li><span class="fname">.env</span><span class="fdesc">IBM Cloud credentials (secure)</span></li>
+        </ul>
+      </div>
+      <div class="arch-card">
+        <div class="arch-title">💻 Frontend — React 18 + Vite</div>
+        <ul class="file-list">
+          <li><span class="fname">App.jsx</span><span class="fdesc">Root layout, Chat ↔ Roadmap tabs</span></li>
+          <li><span class="fname">ChatPanel.jsx</span><span class="fdesc">Chat UI + stage-aware quick replies</span></li>
+          <li><span class="fname">RoadmapPanel.jsx</span><span class="fdesc">Track cards, module list, progress</span></li>
+          <li><span class="fname">ProfileSidebar.jsx</span><span class="fdesc">Student profile + journey stepper</span></li>
+          <li><span class="fname">useChat.js</span><span class="fdesc">Session &amp; message state hook</span></li>
+          <li><span class="fname">api.js</span><span class="fdesc">Axios client for all backend calls</span></li>
+          <li><span class="fname">vite.config.js</span><span class="fdesc">Dev server + /api proxy to port 5000</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <div class="section-title">IBM Cloud Integration</div>
+    <div class="ibm-box">
+      <div class="ibm-logo">IBM</div>
+      <div>
+        <div class="ibm-title">IBM Granite 4 (granite-4-h-small) via watsonx.ai</div>
+        <div class="ibm-sub">Confirmed working on IBM Cloud Lite free tier</div>
+        <div class="ibm-chips">
+          <span class="ibm-chip">Model: ibm/granite-4-h-small</span>
+          <span class="ibm-chip">API: /ml/v1/text/chat</span>
+          <span class="ibm-chip">Auth: IBM IAM token (auto-refresh)</span>
+          <span class="ibm-chip">Platform: watsonx.ai on IBM Cloud Lite</span>
+          <span class="ibm-chip">Used for: reply generation + value extraction</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <div class="section-title">6 Learning Tracks · 54 Curated Courses</div>
+    <div class="tracks">
+      <div class="track-card"><div class="track-icon">💻</div><div class="track-name">Frontend Dev</div><div class="track-count">9 courses · B→A</div></div>
+      <div class="track-card"><div class="track-icon">🔒</div><div class="track-name">Cybersecurity</div><div class="track-count">9 courses · B→A</div></div>
+      <div class="track-card"><div class="track-icon">🎨</div><div class="track-name">UI/UX Design</div><div class="track-count">9 courses · B→A</div></div>
+      <div class="track-card"><div class="track-icon">📊</div><div class="track-name">Data Science</div><div class="track-count">9 courses · B→A</div></div>
+      <div class="track-card"><div class="track-icon">☁️</div><div class="track-name">Cloud Computing</div><div class="track-count">9 courses · B→A</div></div>
+      <div class="track-card"><div class="track-icon">⚙️</div><div class="track-name">Backend Dev</div><div class="track-count">9 courses · B→A</div></div>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <div class="section-title">Technology Stack</div>
+    <div class="tech-list">
+
+      <!-- IBM Granite -->
+      <div class="tech-card stripe-granite">
+        <div class="tech-icon-wrap icon-granite">🤖</div>
+        <div class="tech-body">
+          <div class="tech-name">IBM Granite</div>
+          <div class="tech-model">ibm/granite-4-h-small · via watsonx.ai</div>
+          <div class="tech-desc">
+            The core AI brain of LearnMate. IBM Granite powers every part of the agentic conversation — generating warm, contextual replies, extracting structured values (name, skill level, track, goal) from free-form student input, and producing personalized roadmaps. Used as a mandatory IBM foundation model.
+          </div>
+          <div class="tech-tags">
+            <span class="tag tag-blue">Foundation LLM</span>
+            <span class="tag tag-blue">Reply Generation</span>
+            <span class="tag tag-blue">Value Extraction</span>
+            <span class="tag tag-blue">Roadmap Creation</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- watsonx.ai -->
+      <div class="tech-card stripe-watsonx">
+        <div class="tech-icon-wrap icon-watsonx">☁️</div>
+        <div class="tech-body">
+          <div class="tech-name">IBM watsonx.ai</div>
+          <div class="tech-model">IBM Cloud Lite · /ml/v1/text/chat API</div>
+          <div class="tech-desc">
+            watsonx.ai is the IBM platform that hosts and serves the Granite model. LearnMate calls the watsonx.ai chat completion API for every student message, passing the full conversation history and a carefully engineered system prompt to maintain agentic stage state across turns.
+          </div>
+          <div class="tech-tags">
+            <span class="tag tag-purple">AI Platform</span>
+            <span class="tag tag-purple">Model Hosting</span>
+            <span class="tag tag-purple">Chat Completions API</span>
+            <span class="tag tag-purple">IBM Cloud Lite</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- React + Vite -->
+      <div class="tech-card stripe-react">
+        <div class="tech-icon-wrap icon-react">⚛️</div>
+        <div class="tech-body">
+          <div class="tech-name">React 18 + Vite</div>
+          <div class="tech-model">Frontend Single-Page Application</div>
+          <div class="tech-desc">
+            The entire LearnMate UI is built with React 18 and bundled with Vite. It provides the Chat panel with stage-aware quick-reply chips, the Roadmap panel with track cards and module progress, and the Profile sidebar showing the student's journey stepper — all updating reactively in real time.
+          </div>
+          <div class="tech-tags">
+            <span class="tag tag-teal">Frontend SPA</span>
+            <span class="tag tag-teal">React 18</span>
+            <span class="tag tag-teal">Vite</span>
+            <span class="tag tag-teal">Reactive UI</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Node.js + Express -->
+      <div class="tech-card stripe-node">
+        <div class="tech-icon-wrap icon-node">🟢</div>
+        <div class="tech-body">
+          <div class="tech-name">Node.js + Express</div>
+          <div class="tech-model">REST API Backend · Port 5000</div>
+          <div class="tech-desc">
+            The backend is a Node.js + Express server that manages the 5-stage agentic state machine, proxies calls to IBM Granite, stores in-memory student sessions, serves the course catalog, and exposes REST endpoints for chat, roadmap generation, and progress tracking.
+          </div>
+          <div class="tech-tags">
+            <span class="tag tag-green">REST API</span>
+            <span class="tag tag-green">Agentic State Machine</span>
+            <span class="tag tag-green">Node.js</span>
+            <span class="tag tag-green">Express</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- IBM IAM -->
+      <div class="tech-card stripe-iam">
+        <div class="tech-icon-wrap icon-iam">🔐</div>
+        <div class="tech-body">
+          <div class="tech-name">IBM IAM</div>
+          <div class="tech-model">Identity &amp; Access Management · Auto-refresh Bearer tokens</div>
+          <div class="tech-desc">
+            IBM IAM handles all authentication to watsonx.ai. The backend exchanges a long-lived API key for a short-lived Bearer token, caching and auto-refreshing it before expiry. This keeps credentials secure in environment variables and ensures uninterrupted Granite API access throughout the session.
+          </div>
+          <div class="tech-tags">
+            <span class="tag tag-orange">Authentication</span>
+            <span class="tag tag-orange">API Key → Bearer Token</span>
+            <span class="tag tag-orange">Token Auto-Refresh</span>
+            <span class="tag tag-orange">IBM Security</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- In-Memory Sessions -->
+      <div class="tech-card stripe-session">
+        <div class="tech-icon-wrap icon-session">🗂️</div>
+        <div class="tech-body">
+          <div class="tech-name">In-Memory Session Store</div>
+          <div class="tech-model">Student State · Conversation History · Roadmap Cache</div>
+          <div class="tech-desc">
+            Each student session is stored in-memory on the server, holding the current agentic stage, collected profile values (name, track, skill, goal), the full conversation history for Granite context, and the generated roadmap with per-course completion status — enabling stateful multi-turn conversations.
+          </div>
+          <div class="tech-tags">
+            <span class="tag tag-yellow">Session Management</span>
+            <span class="tag tag-yellow">State Machine</span>
+            <span class="tag tag-yellow">Conversation History</span>
+            <span class="tag tag-yellow">Progress Tracking</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <div class="section-title">REST API Endpoints</div>
+    <div class="card" style="padding:0;overflow:hidden">
+      <table>
+        <thead><tr><th>Method</th><th>Endpoint</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><span class="method post">POST</span></td><td><code>/api/chat/session</code></td><td>Create session + initial greeting</td></tr>
+          <tr><td><span class="method post">POST</span></td><td><code>/api/chat/:id/message</code></td><td>Send message → IBM Granite reply</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/api/chat/:id</code></td><td>Get full session state</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/api/roadmap/:id</code></td><td>Fetch generated roadmap</td></tr>
+          <tr><td><span class="method post">POST</span></td><td><code>/api/roadmap/:id/regenerate</code></td><td>Rebuild with updated profile</td></tr>
+          <tr><td><span class="method patch">PATCH</span></td><td><code>/api/progress/:id/course/:cid</code></td><td>Mark course in_progress / completed</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/api/progress/:id</code></td><td>Progress stats &amp; percentage</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/api/health</code></td><td>Service health check</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <div class="section-title">How to Run</div>
+    <div class="setup">
+      <div class="setup-step"><div class="setup-num">1</div><div class="setup-text"><strong>Get IBM Cloud credentials</strong> — Sign up free at cloud.ibm.com → create watsonx.ai instance → copy <code>API Key</code> and <code>Project ID</code></div></div>
+      <div class="setup-step"><div class="setup-num">2</div><div class="setup-text"><strong>Fill <code>backend/.env</code></strong> — Set <code>WATSONX_API_KEY</code> and <code>WATSONX_PROJECT_ID</code>. Model is pre-set to <code>ibm/granite-4-h-small</code></div></div>
+      <div class="setup-step"><div class="setup-num">3</div><div class="setup-text"><strong>Start backend</strong> — <code>npm run dev:backend</code> → API on <code>http://localhost:5000</code></div></div>
+      <div class="setup-step"><div class="setup-num">4</div><div class="setup-text"><strong>Start frontend</strong> — <code>npm run dev:frontend</code> → UI on <code>http://localhost:5173</code></div></div>
+    </div>
+  </div>
+
+  <div class="footer">Made with IBM Bob</div>
+</div>
+</body>
+</html>

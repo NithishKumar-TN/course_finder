@@ -1,0 +1,304 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>LearnMate — Architecture Blueprint</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #1a1a2e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: "Segoe UI", Arial, sans-serif;
+  }
+
+  .slide {
+    width: 1270px;
+    height: 714px;
+    background: #0f1117;
+    border-radius: 10px;
+    padding: 20px 26px 16px;
+    position: relative;
+    overflow: hidden;
+    color: #e2e8f0;
+  }
+
+  .slide::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  .slide-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1.5px solid rgba(255,255,255,.1);
+  }
+  .slide-title { font-size: 16px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: #f8fafc; }
+  .slide-title span { color: #6366f1; }
+  .badge-row { display: flex; gap: 7px; }
+  .badge { font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+  .b1 { background: #1a0d2e; color: #a78bfa; border: 1px solid #3d1d7a; }
+  .b2 { background: #0a1628; color: #60a5fa; border: 1px solid #1a3a70; }
+  .b3 { background: #0d1f0f; color: #4ade80; border: 1px solid #166534; }
+  .b4 { background: #1a1208; color: #fbbf24; border: 1px solid #78350f; }
+
+  .main { display: flex; align-items: flex-start; gap: 7px; height: 456px; }
+
+  .layer {
+    border-radius: 8px; border: 1.5px dashed;
+    padding: 7px 9px 9px; position: relative;
+    display: flex; flex-direction: column; gap: 5px;
+  }
+  .layer-label {
+    position: absolute; top: -9px; left: 10px;
+    font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em;
+    padding: 1px 7px; border-radius: 3px;
+  }
+  .l-user  { border-color: #f59e0b; width: 88px; }
+  .l-user .layer-label  { color: #fbbf24; background: #1a1208; }
+  .l-fe    { border-color: #6366f1; width: 170px; }
+  .l-fe .layer-label    { color: #a78bfa; background: #1a0d2e; }
+  .l-be    { border-color: #10b981; width: 196px; }
+  .l-be .layer-label    { color: #4ade80; background: #0d1f0f; }
+  .l-ibm   { border-color: #3b82f6; width: 184px; }
+  .l-ibm .layer-label   { color: #60a5fa; background: #0a1628; }
+  .l-db    { border-color: #8b5cf6; }
+  .l-db .layer-label    { color: #c4b5fd; background: #1a0d2e; }
+
+  .comp { border-radius: 6px; border: 1px solid; padding: 5px 7px; font-size: 10.5px; background: rgba(255,255,255,.04); }
+  .comp-title { font-weight: 700; font-size: 11px; margin-bottom: 2px; }
+  .comp-sub   { font-size: 9.5px; color: #94a3b8; line-height: 1.35; }
+
+  .c-amber  { border-color: #d97706; } .c-amber .comp-title  { color: #fcd34d; }
+  .c-purple { border-color: #7c3aed; } .c-purple .comp-title { color: #c4b5fd; }
+  .c-green  { border-color: #059669; } .c-green .comp-title  { color: #6ee7b7; }
+  .c-blue   { border-color: #2563eb; } .c-blue .comp-title   { color: #93c5fd; }
+  .c-slate  { border-color: #475569; } .c-slate .comp-title  { color: #cbd5e1; }
+
+  .arrow-v {
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; flex-shrink: 0; width: 44px; padding-top: 55px; gap: 2px;
+  }
+  .arr-label {
+    font-size: 9px; color: #64748b;
+    background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+    border-radius: 3px; padding: 1px 5px; white-space: nowrap; text-align: center;
+  }
+  .arr-line { width: 100%; height: 1.5px; background: #475569; position: relative; }
+  .arr-line.r::after  { content:"▶"; position:absolute; right:-5px; top:-5px; font-size:9px; color:#475569; }
+  .arr-line.l::before { content:"◀"; position:absolute; left:-5px;  top:-5px; font-size:9px; color:#475569; }
+  .arr-blue { background: #3b82f6; }
+  .arr-blue::after  { color:#3b82f6 !important; }
+  .arr-blue::before { color:#3b82f6 !important; }
+
+  .ibm-badge { font-weight:900; font-size:14px; color:#3b82f6; letter-spacing:-1px; display:block; margin-bottom:1px; }
+  .use-tag {
+    font-size: 8.5px; background:#172554; color:#93c5fd; border:1px solid #1e3a8a;
+    border-radius:3px; padding:1px 5px; display:inline-block; margin:1px 1px 0 0;
+  }
+
+  /* DB section */
+  .db-section { display: flex; margin-top: 6px; padding-left: 272px; gap: 10px; align-items: flex-start; }
+  .db-connector { display:flex; flex-direction:column; align-items:center; padding-top: 0; }
+  .v-line { width:1.5px; height:16px; background:#475569; }
+  .v-label { font-size:9px; color:#64748b; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:3px; padding:1px 5px; margin:2px 0; }
+  .v-arrow { font-size:9px; color:#475569; }
+
+  .db-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:5px; margin-top:6px; }
+  .db-cell { border:1px solid #7c3aed; border-radius:5px; padding:4px 6px; background:rgba(139,92,246,.08); }
+  .db-cell-t { font-weight:700; color:#c4b5fd; font-size:9.5px; margin-bottom:1px; }
+  .db-cell-s { color:#94a3b8; font-size:8.5px; }
+
+  .bottom { display:flex; align-items:center; gap:12px; margin-top:8px; padding-top:8px; border-top:1px dashed rgba(255,255,255,.08); }
+  .ethics { flex:1; background:rgba(16,185,129,.07); border:1px dashed #10b981; border-radius:6px; padding:5px 11px; font-size:9.5px; color:#6ee7b7; line-height:1.5; }
+  .ethics strong { color:#34d399; }
+  .legend { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+  .leg-item { display:flex; align-items:center; gap:5px; font-size:9px; color:#94a3b8; }
+  .leg-dot { width:10px; height:10px; border-radius:2px; border:1.5px dashed; }
+</style>
+</head>
+<body>
+<div class="slide">
+
+  <div class="slide-header">
+    <div class="slide-title">🎓 Learn<span>Mate</span> — System Architecture Blueprint</div>
+    <div class="badge-row">
+      <span class="badge b1">IBM Granite 3 · granite-3-8b-instruct</span>
+      <span class="badge b2">watsonx.ai · IBM IAM</span>
+      <span class="badge b3">React 18 + Node.js + Express</span>
+      <span class="badge b4">SQLite · 10 tables · JWT Auth</span>
+    </div>
+  </div>
+
+  <div class="main">
+
+    
+    <div class="layer l-user" style="margin-top:12px;height:110px;justify-content:center">
+      <span class="layer-label">User</span>
+      <div class="comp c-amber" style="text-align:center">
+        <div class="comp-title">👨‍🎓 Student</div>
+        <div class="comp-sub">Browser<br />Any device</div>
+      </div>
+    </div>
+
+    
+    <div class="arrow-v" style="padding-top:38px;width:34px">
+      <div class="arr-label">HTTPS</div>
+      <div class="arr-line r"></div>
+    </div>
+
+    
+    <div class="layer l-fe">
+      <span class="layer-label">Frontend — React 18 + Vite</span>
+      <div style="margin-top:8px" class="comp c-purple">
+        <div class="comp-title">🔐 Login · Register · Forgot/Reset Password</div>
+        <div class="comp-sub">AuthContext · ProtectedRoute · JWT cookie</div>
+      </div>
+      <div class="comp c-purple">
+        <div class="comp-title">🏠 StudentDashboard · AdminDashboard</div>
+        <div class="comp-sub">Session history · profile cards · resume</div>
+      </div>
+      <div class="comp c-purple">
+        <div class="comp-title">💬 ChatPanel</div>
+        <div class="comp-sub">5-stage guided chat · stage-aware quick replies</div>
+      </div>
+      <div class="comp c-purple">
+        <div class="comp-title">🗺️ RoadmapPanel · 👤 ProfileSidebar</div>
+        <div class="comp-sub">Track cards · progress bars · journey stepper</div>
+      </div>
+      <div class="comp c-purple">
+        <div class="comp-title">🧑‍🏫 TutorPage</div>
+        <div class="comp-sub">Tutor / coaching view</div>
+      </div>
+      <div class="comp c-slate" style="margin-top:2px">
+        <div class="comp-title">useChat.js · api.js</div>
+        <div class="comp-sub">Axios REST client · state hooks</div>
+      </div>
+    </div>
+
+    
+    <div class="arrow-v" style="width:42px;padding-top:55px">
+      <div class="arr-label">REST /api</div>
+      <div class="arr-line r" style="margin:2px 0"></div>
+      <div class="arr-label" style="margin-top:4px">JSON</div>
+      <div class="arr-line l" style="margin:2px 0"></div>
+    </div>
+
+    
+    <div class="layer l-be">
+      <span class="layer-label">Backend — Node.js + Express</span>
+      <div style="margin-top:8px" class="comp c-green">
+        <div class="comp-title">🔐 auth.js</div>
+        <div class="comp-sub">Register · Login · Logout · Me · Forgot/Reset password · bcrypt · JWT</div>
+      </div>
+      <div class="comp c-green">
+        <div class="comp-title">💬 chat.js</div>
+        <div class="comp-sub">POST /session · /message · forceNew · resumeSessionId</div>
+      </div>
+      <div class="comp c-green">
+        <div class="comp-title">🗺️ roadmap.js · 📊 progress.js · 📋 history.js</div>
+        <div class="comp-sub">GET/POST roadmap · PATCH status + ratings · session list</div>
+      </div>
+      <div class="comp c-green">
+        <div class="comp-title">👤 profile.js · 🛡️ admin.js</div>
+        <div class="comp-sub">Student profile update · Admin user management</div>
+      </div>
+      <div class="comp c-green" style="border-color:#34d399">
+        <div class="comp-title" style="color:#34d399">⚙️ agentService.js — 5-Stage State Machine</div>
+        <div class="comp-sub">greeting → interest → skill → goal → roadmap_generated → in_progress</div>
+      </div>
+      <div class="comp c-green">
+        <div class="comp-title">🔑 authenticate.js · 📚 courses.js · dbSessionService.js</div>
+        <div class="comp-sub">JWT middleware · 54 courses / 6 tracks / 3 levels · SQLite session store</div>
+      </div>
+    </div>
+
+    
+    <div class="arrow-v" style="width:44px;padding-top:70px">
+      <div class="arr-label">watsonx API</div>
+      <div class="arr-line r arr-blue" style="margin:2px 0"></div>
+      <div class="arr-label" style="margin-top:4px">IAM Token</div>
+      <div class="arr-line l arr-blue" style="margin:2px 0"></div>
+    </div>
+
+    
+    <div class="layer l-ibm">
+      <span class="layer-label">IBM Cloud Lite</span>
+      <div style="margin-top:8px" class="comp c-blue">
+        <span class="ibm-badge">IBM</span>
+        <div class="comp-title">IBM Granite 3</div>
+        <div class="comp-sub">ibm/granite-3-8b-instruct<br />/ml/v1/text/chat</div>
+        <div style="margin-top:5px">
+          <span class="use-tag">① Reply Generation</span>
+          <span class="use-tag">② Value Extraction</span>
+          <span class="use-tag">③ Adaptive Coaching</span>
+        </div>
+      </div>
+      <div class="comp c-blue">
+        <div class="comp-title">🔑 IBM IAM</div>
+        <div class="comp-sub">API Key → Bearer Token<br />Auto-refresh every 55 min</div>
+      </div>
+      <div class="comp c-blue">
+        <div class="comp-title">graniteService.js</div>
+        <div class="comp-sub">Full chat history + stage-aware system prompt per call</div>
+      </div>
+    </div>
+
+  </div>
+
+  
+  <div class="db-section">
+    <div style="display:flex;flex-direction:column;align-items:center;padding-top:0">
+      <div class="v-line"></div>
+      <div class="v-label">read / write</div>
+      <div class="v-line"></div>
+      <div class="v-arrow">▼</div>
+    </div>
+    <div class="layer l-db" style="width:820px">
+      <span class="layer-label">Database — SQLite (better-sqlite3) · 10 tables</span>
+      <div class="db-grid">
+        <div class="db-cell"><div class="db-cell-t">🗂️ sessions</div><div class="db-cell-s">stage · profile · roadmap</div></div>
+        <div class="db-cell"><div class="db-cell-t">💬 chat_messages</div><div class="db-cell-s">role · content · timestamp</div></div>
+        <div class="db-cell"><div class="db-cell-t">🗺️ roadmaps</div><div class="db-cell-s">roadmap_data</div></div>
+        <div class="db-cell"><div class="db-cell-t">📄 roadmap_versions</div><div class="db-cell-s">version history snapshots</div></div>
+        <div class="db-cell"><div class="db-cell-t">📊 progress</div><div class="db-cell-s">status · rating · completed_at</div></div>
+        <div class="db-cell"><div class="db-cell-t">👤 users</div><div class="db-cell-s">email · password hash · role</div></div>
+        <div class="db-cell"><div class="db-cell-t">🎓 student_profiles</div><div class="db-cell-s">tracks · skill · goal</div></div>
+        <div class="db-cell"><div class="db-cell-t">🧠 ai_memory</div><div class="db-cell-s">persistent memory summary</div></div>
+        <div class="db-cell"><div class="db-cell-t">🔑 password_reset_tokens</div><div class="db-cell-s">hashed token · expires_at</div></div>
+        <div class="db-cell"><div class="db-cell-t">📝 assessment_history</div><div class="db-cell-s">assessment_data · score</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <div class="ethics">
+      <strong>🛡️ Security &amp; Responsible AI:</strong>
+      bcrypt (12 rounds) · JWT in HTTP-only cookies · Rate limiting (5 req/15 min) · Helmet.js · CORS restricted ·
+      IBM Granite — IBM's responsible AI model · Structured extraction prevents hallucination propagation · Session ownership enforced
+    </div>
+    <div class="legend">
+      <div class="leg-item"><div class="leg-dot" style="border-color:#f59e0b"></div> User</div>
+      <div class="leg-item"><div class="leg-dot" style="border-color:#6366f1"></div> Frontend</div>
+      <div class="leg-item"><div class="leg-dot" style="border-color:#10b981"></div> Backend</div>
+      <div class="leg-item"><div class="leg-dot" style="border-color:#3b82f6"></div> IBM Cloud</div>
+      <div class="leg-item"><div class="leg-dot" style="border-color:#8b5cf6"></div> Database</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

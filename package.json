@@ -1,0 +1,15 @@
+{
+  "name": "learnmate",
+  "version": "1.0.0",
+  "description": "LearnMate - Agentic AI for Personalized Course Pathways",
+  "scripts": {
+    "install:all": "npm install --prefix backend && npm install --prefix frontend",
+    "dev:backend": "npm run dev --prefix backend",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "start:backend": "npm start --prefix backend",
+    "build:frontend": "npm run build --prefix frontend"
+  },
+  "keywords": ["agentic-ai", "ibm-granite", "watsonx", "learning", "personalized"],
+  "author": "LearnMate Team",
+  "license": "MIT"
+}
