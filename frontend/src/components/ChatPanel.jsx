@@ -24,8 +24,9 @@ export default function ChatPanel({ messages, loading, onSendMessage, stage }) {
       "2. Cybersecurity",
       "3. UI/UX Design",
       "4. Data Science",
-      "5. Cloud Computing",
-      "6. Backend Development",
+      "5. Artificial Intelligence & Machine Learning",
+      "6. Cloud Computing",
+      "7. Backend Development",
     ],
     skill_assessment: ["1. Beginner", "2. Intermediate", "3. Advanced"],
     goal_collection: [
@@ -119,7 +120,13 @@ export default function ChatPanel({ messages, loading, onSendMessage, stage }) {
           style={styles.input}
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder={loading ? "LearnMate is thinking..." : "Type your message…"}
+          placeholder={
+            loading
+              ? "LearnMate is thinking..."
+              : stage === "interest_assessment"
+              ? "Pick a track above or type any topic (e.g. AI, Flutter, Unity)..."
+              : "Type your message…"
+          }
           disabled={loading}
         />
         <button
