@@ -278,25 +278,26 @@ IBM Granite is called on **every turn** with the full conversation history and a
 | `npm run build:frontend` | Build frontend for production |
 
 ## Implementation
-1. Account creation
+
+## 1. Account creation
 <img width="1069" height="632" alt="Screenshot 2026-11-20 200332" src="https://github.com/user-attachments/assets/0b51154e-3b8e-46ae-ade3-a076122cb81f" />
 
-2. Login
+## 2. Login
 <img width="785" height="629" alt="Screenshot 2026-11-20 200427" src="https://github.com/user-attachments/assets/430a870c-2753-430d-b081-5ef9ab5f0f85" />
 
-3. Dashboard
+## 3. Dashboard
 <img width="1362" height="617" alt="Screenshot 2026-11-20 200449" src="https://github.com/user-attachments/assets/a3555f78-c9c4-42ab-ae9e-e899dcd000e0" />
 
-4. Chat Section
+## 4. Chat Section
 <img width="1365" height="631" alt="Screenshot 2026-11-20 200549" src="https://github.com/user-attachments/assets/fc3fb52f-5556-4d43-8c5b-e8bc15e9f7d1" />
 
-5. Information Gathering
+## 5. Information Gathering
 <img width="1365" height="630" alt="Screenshot 2026-11-20 200753" src="https://github.com/user-attachments/assets/b901073f-ad01-4e45-a2e1-0db0558afe8e" />
 
-6. Road Map Generation
+## 6. Road Map Generation
 <img width="1365" height="626" alt="Screenshot 2026-11-20 200801" src="https://github.com/user-attachments/assets/eac8f48f-9800-4955-b8ac-9cdb8d9aa026" />
 
-7. Courses
+## 7. Courses
 <img width="1365" height="627" alt="Screenshot 2026-11-20 200956" src="https://github.com/user-attachments/assets/4ce9051a-53d3-493a-a738-0aade419cdc3" />
 
 8. History Maintenance in Dashboard
