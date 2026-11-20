@@ -86,7 +86,7 @@ NODE_ENV=development
 WATSONX_API_KEY=<your IBM Cloud API key>
 WATSONX_PROJECT_ID=<your watsonx.ai project ID>
 WATSONX_URL=https://us-south.ml.cloud.ibm.com
-GRANITE_MODEL_ID=ibm/granite-3-8b-instruct
+GRANITE_MODEL_ID=ibm/granite-4-h-small
 IBM_IAM_URL=https://iam.cloud.ibm.com/identity/token
 
 # JWT auth (required — not in .env.example, must be added manually)
@@ -186,7 +186,8 @@ IBM Granite is called on **every turn** with the full conversation history and a
 
 | Component | Detail |
 |-----------|--------|
-| Language Model | IBM Granite `ibm/granite-3-8b-instruct` |
+| Language Model | IBM Granite `ibm/granite-4-h-small`|
+|
 | Platform | IBM watsonx.ai |
 | API endpoint | `/ml/v1/text/chat` |
 | Auth | IBM Cloud IAM (API Key → Bearer token, auto-refreshed every 55 min) |
